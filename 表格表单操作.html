@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+th, td {
+	width: 100px;
+	text-align: center;
+	border: 1px solid #333;
+}
+thead {
+	background: #ccc;
+}
+</style>
+</head>
+
+<body>
+<div id="insert"> <span>姓名：</span>
+  <input id="xingming" type="text" value="老魏" />
+  <span>年龄：</span>
+  <input id="age" type="text" value="23" />
+  <br/>
+  <span>性别：</span>
+  <select id="sex">
+    <option value="男">男</option>
+    <option value="女">女</option>
+  </select>
+  <input id="btn" type="button" value="添加" />
+</div>
+<div id="information">
+  <table id="infor">
+    <thead>
+      <tr>
+        <th><input id="check" type="checkbox" />
+          全选</th>
+        <th>ID</th>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>性别</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--<tr>
+        	<td><input type="checkbox" /></td>
+            <td>1</td>
+            <td>老魏</td>
+            <td>23</td>
+            <td>男</td>
+            <td><span>上</span><span>下</span><span>删除</span></td>
+        </tr>-->
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
+<script>
+var infor = document.getElementById('infor');
+var btn = document.getElementById('btn');
+var xingming = document.getElementById('xingming');
+var age = document.getElementById('age');
+var sex = document.getElementById('sex');
+var check = document.getElementById('check');
+var tbody = infor.tBodies[0];
+var span = tbody.getElementsByTagName('span');
+var input = document.getElementsByTagName('input');
+var num=1;
+var onoff=true;
+btn.onclick=function(){
+	var arr=['<input type="checkbox">'];
+	arr.push(num,xingming.value,age.value,sex.value,'<span>上</span><span>下</span><span>删除</span>');
+	var tr = document.createElement('tr');
+	for(var i=0; i<6; i++)
+	{
+		var td = document.createElement('td');
+		td.innerHTML = arr[i];
+		tr.appendChild(td);
+	}
+	num++;
+	tbody.appendChild(tr);
+	for(var i=0; i<span.length; i++)
+	{
+		span[i].index=i;
+	
+	}
+	for(var i=0; i<span.length; i++)
+	{
+		
+		span[i].onclick=function(){
+			if(this.index%3==0)
+			{
+				tbody.insertBefore(this.parentNode.parentNode,this.parentNode.parentNode.previousElementSibling);
+			}else if(this.index%3==1)
+			{
+				tbody.insertBefore(this.parentNode.parentNode.nextElementSibling,this.parentNode.parentNode);
+			}else{
+				tbody.removeChild(this.parentNode.parentNode);
+				num--;
+			}
+		};
+	}
+	check.onclick=function(){
+		if(onoff==true)
+		{
+			for(var i=0; i<input.length; i++)
+			{
+				if(input[i].type=="checkbox")	
+				{
+					input[i].checked="checked";	
+				}
+				
+			}
+			onoff=false;
+		}else{
+			for(var i=0; i<input.length; i++)
+			{
+				if(input[i].type=="checkbox")	
+				{
+					input[i].checked=false;	
+				}
+				
+			}
+			onoff=true;
+		}
+	};
+};
+
+
+
+</script>
